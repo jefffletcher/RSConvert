@@ -10,7 +10,7 @@ public class DLCPackageConverter {
       Path sourcePackage,
       Platform sourcePlatform,
       Platform targetPlatform,
-      String appId) throws IOException {
+      String appId) throws Exception {
 
     Packer.unpack(
         sourcePackage, Files.createTempDirectory("rsConvert"), sourcePlatform, false, true);

@@ -1,6 +1,5 @@
 package rocksmith.converter;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,13 +19,13 @@ public class Converter {
     this.sourcePackage = sourcePackage;
   }
 
-  private void convert() throws IOException {
+  private void convert() throws Exception {
     String result = DLCPackageConverter
         .convert(sourcePackage, SOURCE_PLATFORM, TARGET_PLATFORM, APP_ID);
     System.out.println(result);
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     if (args.length != 1) {
       System.out.println("Usage: java rocksmith.converter.Converter <filename>");
       System.exit(0);

@@ -1,10 +1,12 @@
 package rocksmith.converter.psarc;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import rocksmith.converter.Rijndael;
 
 public class Psarc {
 
@@ -53,7 +55,7 @@ public class Psarc {
     toc.add(new Entry());
   }
 
-  public void read(InputStream inputStream, boolean lazy) throws IOException {
+  public void read(InputStream inputStream, boolean lazy) throws Exception {
     toc.clear();
     reader = new DataInputStream(inputStream);
     header.magicNumber = reader.readInt();
@@ -74,7 +76,8 @@ public class Psarc {
     int tocSize = (int) header.totalTocSize - 32;
 
     if (header.archiveFlags == 4) { //TOC_ENCRYPTED
-
+      ByteArrayOutputStream tocStream = new ByteArrayOutputStream();
+      Rijndael.decryptPsarc(reader, tocStream, header.totalTocSize);
     }
   }
 

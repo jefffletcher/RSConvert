@@ -19,7 +19,7 @@ public class Packer {
       Path destDirPath,
       Platform predefinedPlatform,
       boolean decodeAudio,
-      boolean overwriteSongXml) throws IOException {
+      boolean overwriteSongXml) throws Exception {
 
     // Only support PC -> PS3 conversions
     assert (predefinedPlatform.getPlatform() == GamePlatform.PC);
@@ -32,7 +32,7 @@ public class Packer {
 
   private static Path extractPSARC(
       Path srcPath, Path destPath, InputStream inputStream, Platform platform,
-      boolean isInitialCall) throws IOException {
+      boolean isInitialCall) throws Exception {
     if (isInitialCall) {
       destPath = getUnpackedDir(srcPath, destPath, platform);
     }
