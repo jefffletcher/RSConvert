@@ -3,6 +3,7 @@ package rocksmith.converter.psarc;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class Entry {
 
@@ -31,6 +32,9 @@ public class Entry {
 
   @Override
   public String toString() {
-    return name;
+    return String.format("MD5: %s%nid: %d%nname: %s%nzIndexBegin: %d%nlength: %d%n"
+            + "offset: %d%nisCompressed: %b%n",
+        Arrays.toString(MD5), id, name, zIndexBegin, length, offset, isCompressed
+    );
   }
 }

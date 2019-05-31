@@ -1,8 +1,8 @@
 package rocksmith.converter.psarc;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +78,23 @@ public class Psarc {
     if (header.archiveFlags == 4) { //TOC_ENCRYPTED
       ByteArrayOutputStream tocStream = new ByteArrayOutputStream();
       Rijndael.decryptPsarc(reader, tocStream, header.totalTocSize);
+
+      byte[] tocBytes = tocStream.toByteArray();
+      DataInputStream tocByteStream = new DataInputStream(new ByteArrayInputStream(tocBytes));
+
+      // for (int i = 0; i < header.numFiles; i++) {
+      for (int i = 0; i < 1; i++) {
+        byte[] md5 = new byte[16];
+        tocByteStream.readFully(md5);
+        Entry entry = new Entry();
+        entry.id = i;
+        entry.MD5 = md5;
+        entry.zIndexBegin = tocByteStream.readInt();
+        entry.length = tocByteStream.readLong();
+        entry.offset = tocByteStream.readLong();
+        System.out.println(entry);
+        // toc.add(entry);
+      }
     }
   }
 
